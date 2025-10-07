@@ -5,6 +5,21 @@ All notable changes to Agent OS will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-10-07
+
+Agent OS 2.0 is a major new release that brings several core architectural changes and improvements.
+
+The big headline here is the dual mode architecture for supporting both multi-agent tools (Claude Code) and single-agent tools (every other tool).
+
+[this page](https://buildermethods.com/agent-os/version-2) documents:
+
+- The new features in Agent OS 2.0
+- Architectural changes in 2.0
+- What changed from 1.x
+- Updating guide
+
+[The Agent OS docs](https://buildermethods.com/agent-os) also received a complete overhaul and expansion.  It's now broken out into multiple pages that document every detail of how to install, use and customize Agent OS.
+
 ## [1.4.2] - 2025-08-24
 
 ### Enforced full three-phase task execution
