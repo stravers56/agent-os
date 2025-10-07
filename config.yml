@@ -1,27 +1,44 @@
-# Agent OS Configuration
+version: 2.0.0
+base_install: true
 
-# Refer to the official Agent OS documentation at:
-# https://buildermethods.com/agent-os
+# ================================================
+# MULTI-AGENT MODE
+#
+# Use this mode if you're using a tool that supports multiple agents (a.k.a. subagents).
+# In multi-agent mode, you initiate commands (new-spec, create-spec, implement-spec, etc.)
+# your main agent orchestrates multiple subagents to perform long-running tasks autonomously.
+#
+# You can override this by running:
+# ~/.agent-os/scripts/project-install.sh --multi-agent-mode [true/false] --multi-agent-tool [tool-name]
+# ================================================
 
-agent_os_version: 1.4.1
+multi_agent_mode: true
 
-agents:
-  claude_code:
-    enabled: false
-  cursor:
-    enabled: false
+# Currently supported tools: claude-code
+multi_agent_tool: claude-code
 
-project_types:
-  default:
-    instructions: ~/.agent-os/instructions
-    standards: ~/.agent-os/standards
 
-  # type_a:
-  #   instructions: ~/.agent-os/project_types/type_a/instructions
-  #   standards: ~/.agent-os/project_types/type_a/standards
+# ================================================
+# SINGLE-AGENT MODE
+#
+# Use this mode if you're using a tool that doesn't support multiple agents (a.k.a. subagents).
+# In single-agent mode, you deliver prompts to your main agent to perform tasks step-by-step.
+#
+# You can override this by running:
+# ~/.agent-os/scripts/project-install.sh --single-agent-mode [true/false] --single-agent-tool [tool-name]
+# ================================================
 
-  # type_b:
-  #   instructions: ~/.agent-os/project_types/type_b/instructions
-  #   standards: ~/.agent-os/project_types/type_b/standards
+single_agent_mode: false
+single_agent_tool: generic
 
-default_project_type: default
+
+# ================================================
+# PROFILE
+#
+# Use this profile by default.
+#
+# You can override this by running:
+# ~/.agent-os/scripts/project-install.sh --profile [profile-name]
+# ================================================
+
+profile: default
