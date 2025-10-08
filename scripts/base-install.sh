@@ -496,7 +496,7 @@ perform_fresh_installation() {
     echo ""
     echo -e "${GREEN}Next steps:${NC}"
     echo ""
-    echo -e "${GREEN}1) Customize your profile's standards in ~/agent-os/standards${NC}"
+    echo -e "${GREEN}1) Customize your profile's standards in ~/agent-os/profiles/default/standards${NC}"
     echo ""
     echo -e "${GREEN}2) Navigate to a project directory${NC}"
     echo -e "   ${YELLOW}cd path/to/project-directory${NC}"
