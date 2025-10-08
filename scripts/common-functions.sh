@@ -638,11 +638,11 @@ get_profile_files() {
         fi
 
         if [[ -d "$search_dir" ]]; then
-            find "$search_dir" -type f -name "*.md" -o -name "*.yml" -o -name "*.yaml" 2>/dev/null | while read file; do
-                local relative_path="${file#$profile_dir/}"
+            find "$search_dir" -type f \( -name "*.md" -o -name "*.yml" -o -name "*.yaml" \) 2>/dev/null | while read file; do
+                relative_path="${file#$profile_dir/}"
 
                 # Check if excluded
-                local excluded="false"
+                excluded="false"
                 echo "$excluded_patterns" | while read pattern; do
                     if [[ -n "$pattern" ]] && match_pattern "$relative_path" "$pattern"; then
                         excluded="true"

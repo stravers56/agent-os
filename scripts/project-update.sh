@@ -341,16 +341,16 @@ update_standards() {
             if [[ -f "$source" ]]; then
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_STANDARDS" "standard"; then
                     SKIPPED_FILES+=("$dest")
-                    ((standards_skipped++))
+                    ((standards_skipped++)) || true
                     print_verbose "Skipped: $dest"
                 else
                     if [[ -f "$dest" ]]; then
                         UPDATED_FILES+=("$dest")
-                        ((standards_updated++))
+                        ((standards_updated++)) || true
                         print_verbose "Updated: $dest"
                     else
                         NEW_FILES+=("$dest")
-                        ((standards_new++))
+                        ((standards_new++)) || true
                         print_verbose "New file: $dest"
                     fi
                     if [[ "$DRY_RUN" != "true" ]]; then
@@ -390,16 +390,16 @@ update_roles() {
             if [[ -f "$source" ]]; then
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "false" "role"; then
                     SKIPPED_FILES+=("$dest")
-                    ((roles_skipped++))
+                    ((roles_skipped++)) || true
                     print_verbose "Skipped: $dest"
                 else
                     if [[ -f "$dest" ]]; then
                         UPDATED_FILES+=("$dest")
-                        ((roles_updated++))
+                        ((roles_updated++)) || true
                         print_verbose "Updated: $dest"
                     else
                         NEW_FILES+=("$dest")
-                        ((roles_new++))
+                        ((roles_new++)) || true
                         print_verbose "New file: $dest"
                     fi
                     if [[ "$DRY_RUN" != "true" ]]; then
@@ -448,16 +448,16 @@ update_single_agent_commands() {
 
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_COMMANDS" "command"; then
                     SKIPPED_FILES+=("$dest")
-                    ((commands_skipped++))
+                    ((commands_skipped++)) || true
                     print_verbose "Skipped: $dest"
                 else
                     if [[ -f "$dest" ]]; then
                         UPDATED_FILES+=("$dest")
-                        ((commands_updated++))
+                        ((commands_updated++)) || true
                         print_verbose "Updated: $dest"
                     else
                         NEW_FILES+=("$dest")
-                        ((commands_new++))
+                        ((commands_new++)) || true
                         print_verbose "New file: $dest"
                     fi
                     if [[ "$DRY_RUN" != "true" ]]; then
@@ -478,16 +478,16 @@ update_single_agent_commands() {
 
                     if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_COMMANDS" "command"; then
                         SKIPPED_FILES+=("$dest")
-                        ((commands_skipped++))
+                        ((commands_skipped++)) || true
                         print_verbose "Skipped: $dest"
                     else
                         if [[ -f "$dest" ]]; then
                             UPDATED_FILES+=("$dest")
-                            ((commands_updated++))
+                            ((commands_updated++)) || true
                             print_verbose "Updated: $dest"
                         else
                             NEW_FILES+=("$dest")
-                            ((commands_new++))
+                            ((commands_new++)) || true
                             print_verbose "New file: $dest"
                         fi
                         if [[ "$DRY_RUN" != "true" ]]; then
@@ -533,16 +533,16 @@ update_claude_code_files() {
 
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_COMMANDS" "command"; then
                     SKIPPED_FILES+=("$dest")
-                    ((commands_skipped++))
+                    ((commands_skipped++)) || true
                     print_verbose "Skipped: $dest"
                 else
                     if [[ -f "$dest" ]]; then
                         UPDATED_FILES+=("$dest")
-                        ((commands_updated++))
+                        ((commands_updated++)) || true
                         print_verbose "Updated: $dest"
                     else
                         NEW_FILES+=("$dest")
-                        ((commands_new++))
+                        ((commands_new++)) || true
                         print_verbose "New file: $dest"
                     fi
                     if [[ "$DRY_RUN" != "true" ]]; then
@@ -731,15 +731,15 @@ update_claude_code_files() {
         local commands_actual_new=0
 
         for file in "${UPDATED_FILES[@]}"; do
-            [[ "$file" == *"$command_pattern"* ]] && ((commands_actual_updated++))
+            [[ "$file" == *"$command_pattern"* ]] && ((commands_actual_updated++)) || true
         done
 
         for file in "${NEW_FILES[@]}"; do
-            [[ "$file" == *"$command_pattern"* ]] && ((commands_actual_new++))
+            [[ "$file" == *"$command_pattern"* ]] && ((commands_actual_new++)) || true
         done
 
         for file in "${SKIPPED_FILES[@]}"; do
-            [[ "$file" == *"$command_pattern"* ]] && ((commands_actual_skipped++))
+            [[ "$file" == *"$command_pattern"* ]] && ((commands_actual_skipped++)) || true
         done
 
         if [[ $commands_actual_new -gt 0 ]]; then
@@ -759,15 +759,15 @@ update_claude_code_files() {
         local agents_new=0
 
         for file in "${UPDATED_FILES[@]}"; do
-            [[ "$file" == *"$agent_pattern"* ]] && ((agents_updated++))
+            [[ "$file" == *"$agent_pattern"* ]] && ((agents_updated++)) || true
         done
 
         for file in "${NEW_FILES[@]}"; do
-            [[ "$file" == *"$agent_pattern"* ]] && ((agents_new++))
+            [[ "$file" == *"$agent_pattern"* ]] && ((agents_new++)) || true
         done
 
         for file in "${SKIPPED_FILES[@]}"; do
-            [[ "$file" == *"$agent_pattern"* ]] && ((agents_skipped++))
+            [[ "$file" == *"$agent_pattern"* ]] && ((agents_skipped++)) || true
         done
 
         if [[ $agents_new -gt 0 ]]; then

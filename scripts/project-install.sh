@@ -180,7 +180,7 @@ install_standards() {
                 local installed_file=$(copy_file "$source" "$dest")
                 if [[ -n "$installed_file" ]]; then
                     INSTALLED_FILES+=("$installed_file")
-                    ((standards_count++))
+                    ((standards_count++)) || true
                 fi
             fi
         fi
@@ -210,7 +210,7 @@ install_roles() {
                 local installed_file=$(copy_file "$source" "$dest")
                 if [[ -n "$installed_file" ]]; then
                     INSTALLED_FILES+=("$installed_file")
-                    ((roles_count++))
+                    ((roles_count++)) || true
                 fi
             fi
         fi
@@ -252,7 +252,7 @@ install_single_agent_commands() {
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
                 fi
-                ((commands_count++))
+                ((commands_count++)) || true
             fi
         fi
     done < <(get_profile_files "$EFFECTIVE_PROFILE" "$BASE_DIR" "commands")
@@ -268,7 +268,7 @@ install_single_agent_commands() {
                     if [[ "$DRY_RUN" == "true" ]]; then
                         INSTALLED_FILES+=("$dest")
                     fi
-                    ((commands_count++))
+                    ((commands_count++)) || true
                 fi
             fi
         done < <(get_profile_files "$EFFECTIVE_PROFILE" "$BASE_DIR" "commands")
@@ -303,7 +303,7 @@ install_claude_code_files() {
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
                 fi
-                ((commands_count++))
+                ((commands_count++)) || true
             fi
         fi
     done < <(get_profile_files "$EFFECTIVE_PROFILE" "$BASE_DIR" "commands")
@@ -326,7 +326,7 @@ install_claude_code_files() {
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
                 fi
-                ((agents_count++))
+                ((agents_count++)) || true
             fi
         fi
     done
@@ -343,7 +343,7 @@ install_claude_code_files() {
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
                 fi
-                ((agents_count++))
+                ((agents_count++)) || true
             fi
         fi
     done
@@ -397,7 +397,7 @@ install_claude_code_files() {
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
                 fi
-                ((agents_count++))
+                ((agents_count++)) || true
             done
         fi
     fi
@@ -451,7 +451,7 @@ install_claude_code_files() {
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
                 fi
-                ((agents_count++))
+                ((agents_count++)) || true
             done
         fi
     fi
