@@ -50,7 +50,11 @@ Document your findings for use in the specification.
 
 ### Step 3: Create Core Specification
 
-Write the main specification to `agent-os/specs/[current-spec]/spec.md`:
+Write the main specification to `agent-os/specs/[current-spec]/spec.md`.
+
+Do not write actual code in the spec.md document. Just describe the requirements clearly and concisely.
+
+Follow this structure exactly when creating the content of `spec.md`:
 
 ```markdown
 # Specification: [Feature Name]
@@ -109,5 +113,7 @@ Write the main specification to `agent-os/specs/[current-spec]/spec.md`:
 ## Important Constraints
 
 1. **Always search for reusable code** before specifying new components
-6. **Reference visual assets** when available
-7. **Document why new code is needed** if can't reuse existing
+2. **Reference visual assets** when available
+3. **Do not write actual code** in the spec
+4. **Keep each section short**, with clear, direct, skimmable specifications
+5. **Document WHY new code is needed** if can't reuse existing
