@@ -47,7 +47,7 @@ Provide the spec-verifier with:
 - ALL of the user's raw responses to those questions (from earlier in this conversation)
 - The spec folder path
 
-The spec-verifier will run its verifications and produce a report in `planning/spec-verification.md`
+The spec-verifier will run its verifications and produce a report in `verification/spec-verification.md`
 
 ### PHASE 4: Display Results
 
