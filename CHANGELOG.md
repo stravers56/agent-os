@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Clarified /create-spec command so that task list creation doesn't begin until spec.md has been written.
 - Clarified spec-writer workflow to ensure actual code isn't written in spec.md.
+- Fixed instructions to ensure spec-verification.md is stored in the spec's verication folder.
 
 ## [2.0.1] - 2025-10-08
 
