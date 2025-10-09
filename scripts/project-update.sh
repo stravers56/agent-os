@@ -586,7 +586,7 @@ update_claude_code_files() {
             local source=$(get_profile_file "$PROJECT_PROFILE" "$file" "$BASE_DIR")
             if [[ -f "$source" ]]; then
                 local agent_name=$(basename "$file" .md)
-                local dest="$PROJECT_DIR/.claude/agents/agent-os/specification/${agent_name}.md"
+                local dest="$PROJECT_DIR/.claude/agents/agent-os/${agent_name}.md"
 
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_AGENTS" "agent"; then
                     SKIPPED_FILES+=("$dest")
@@ -617,7 +617,7 @@ update_claude_code_files() {
             for id in $implementer_ids; do
                 print_verbose "Updating implementer agent: $id"
 
-                local dest="$PROJECT_DIR/.claude/agents/agent-os/implementers/${id}.md"
+                local dest="$PROJECT_DIR/.claude/agents/agent-os/${id}.md"
 
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_AGENTS" "agent"; then
                     SKIPPED_FILES+=("$dest")
@@ -675,7 +675,7 @@ update_claude_code_files() {
             for id in $verifier_ids; do
                 print_verbose "Updating area verifier agent: $id"
 
-                local dest="$PROJECT_DIR/.claude/agents/agent-os/verifiers/${id}.md"
+                local dest="$PROJECT_DIR/.claude/agents/agent-os/${id}.md"
 
                 if should_skip_file "$dest" "$OVERWRITE_ALL" "$OVERWRITE_AGENTS" "agent"; then
                     SKIPPED_FILES+=("$dest")

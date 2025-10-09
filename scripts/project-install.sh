@@ -337,7 +337,7 @@ install_claude_code_files() {
             local source=$(get_profile_file "$EFFECTIVE_PROFILE" "$file" "$BASE_DIR")
             if [[ -f "$source" ]]; then
                 local agent_name=$(basename "$file" .md)
-                local dest="$PROJECT_DIR/.claude/agents/agent-os/specification/${agent_name}.md"
+                local dest="$PROJECT_DIR/.claude/agents/agent-os/${agent_name}.md"
 
                 local compiled=$(compile_agent "$source" "$dest" "$BASE_DIR" "$EFFECTIVE_PROFILE" "")
                 if [[ "$DRY_RUN" == "true" ]]; then
@@ -392,7 +392,7 @@ install_claude_code_files() {
                 role_data="${role_data}<<<implementer_standards>>>"$'\n'"$standards_list"$'\n'"<<<END>>>"$'\n'
 
                 # Compile agent
-                local dest="$PROJECT_DIR/.claude/agents/agent-os/implementers/${id}.md"
+                local dest="$PROJECT_DIR/.claude/agents/agent-os/${id}.md"
                 local compiled=$(compile_agent "$template_file" "$dest" "$BASE_DIR" "$EFFECTIVE_PROFILE" "$role_data")
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
@@ -446,7 +446,7 @@ install_claude_code_files() {
                 role_data="${role_data}<<<verifier_standards>>>"$'\n'"$standards_list"$'\n'"<<<END>>>"$'\n'
 
                 # Compile agent
-                local dest="$PROJECT_DIR/.claude/agents/agent-os/verifiers/${id}.md"
+                local dest="$PROJECT_DIR/.claude/agents/agent-os/${id}.md"
                 local compiled=$(compile_agent "$template_file" "$dest" "$BASE_DIR" "$EFFECTIVE_PROFILE" "$role_data")
                 if [[ "$DRY_RUN" == "true" ]]; then
                     INSTALLED_FILES+=("$dest")
