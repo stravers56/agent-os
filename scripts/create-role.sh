@@ -265,9 +265,10 @@ select_model() {
     echo ""
     echo "  1) Sonnet"
     echo "  2) Opus"
+    echo "  3) Inherit your current Claude Code model setting"
     echo ""
 
-    read -p "$(echo -e "${BLUE}Enter selection (1-2): ${NC}")" selection
+    read -p "$(echo -e "${BLUE}Enter selection (1-3): ${NC}")" selection
 
     case $selection in
         1)
@@ -277,6 +278,10 @@ select_model() {
         2)
             ROLE_MODEL="opus"
             print_success "Selected model: Opus"
+            ;;
+        3)
+            ROLE_MODEL="inherit"
+            print_success "Selected model: Inherit from Claude Code"
             ;;
         *)
             print_error "Invalid selection"

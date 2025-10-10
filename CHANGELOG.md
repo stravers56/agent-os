@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.3] - 2025-10-10
 
 - Updated instructions and default standards to reduce excessive tests writing and test running during feature development to improve speed and token useage.
+- For Claude Code users:
+  - Replaced hard-coding of 'opus' model setting on agents with 'inherit' so that it inherits whichever model your Claude Code is currently using.
+  - Updated create-role script to add the "Inherit" option when creating new agents.
 
 ## [2.0.2] - 2025-10-09
 
