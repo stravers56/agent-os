@@ -4,6 +4,16 @@ Follow these instructions for researching this spec's requirements:
 
 {{workflows/specification/research-spec}}
 
+## Display confirmation and next step
+
+Once you've completed your research and documented it, output the following message:
+
+```
+✅ I have documented this spec's research and requirements in `agent-os/specs/[this-spec]/planning`.
+
+Next step: Run the command, `1-create-spec.md`.
+```
+
 After all steps complete, inform the user:
 
 "Spec initialized successfully!

@@ -11,7 +11,9 @@ The tasks list has created at `agent-os/specs/[this-spec]/tasks.md`.
 
 Review it closely to make sure it all looks good.
 
-Next step: Run the command, 3-verify-spec.md to closely verify your spec and tasks list for accuracy and alignment.  Or you can skip straight to running the implement-spec.md command if you're ready.
+Next step: Run the command, `3-verify-spec.md`.
+
+Or if want, you can skip straight to running the `implement-spec.md` command.
 ```
 
 ## User Standards & Preferences Compliance

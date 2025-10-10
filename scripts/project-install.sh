@@ -218,7 +218,7 @@ install_roles() {
 
     if [[ "$DRY_RUN" != "true" ]]; then
         if [[ $roles_count -gt 0 ]]; then
-            echo "✓ Installed $roles_count roles in agent-os/roles"
+            echo "✓ Installed $roles_count files in agent-os/roles"
         fi
     fi
 }

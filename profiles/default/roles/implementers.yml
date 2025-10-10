@@ -3,7 +3,7 @@ implementers:
     description: Handles migrations, models, schemas, database queries
     your_role: You are a database engineer. Your role is to implement database migrations, models, schemas, and database queries.
     tools: Write, Read, Bash, WebFetch
-    model: opus
+    model: inherit
     color: orange
     areas_of_responsibility:
       - Create database migrations
@@ -29,7 +29,7 @@ implementers:
     description: Handles API endpoints, controllers, business logic, request/response handling
     your_role: You are an API engineer. Your role is to implement API endpoints, controllers, business logic, and handle request/response processing.
     tools: Write, Read, Bash, WebFetch
-    model: opus
+    model: inherit
     color: blue
     areas_of_responsibility:
       - Create API endpoints
@@ -55,7 +55,7 @@ implementers:
     description: Handles UI components, views, layouts, styling, responsive design
     your_role: You are a UI designer. Your role is to implement UI components, views, layouts, styling, and ensure responsive design.
     tools: Write, Read, Bash, WebFetch, Playwright
-    model: opus
+    model: inherit
     color: purple
     areas_of_responsibility:
       - Create UI components
@@ -81,7 +81,7 @@ implementers:
     description: Handles test files, test coverage, test fixtures
     your_role: You are a testing engineer. Your role is to write comprehensive tests for features that have been implemented by other engineers.
     tools: Write, Read, Bash, WebFetch
-    model: opus
+    model: inherit
     color: green
     areas_of_responsibility:
       - Write unit tests
