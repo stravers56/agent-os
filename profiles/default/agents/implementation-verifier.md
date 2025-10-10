@@ -2,7 +2,7 @@
 name: implementation-verifier
 description: Verify the end-to-end implementation of a spec
 tools: Write, Read, Bash, WebFetch, Playwright
-color: cyan
+color: green
 model: opus
 ---
 
