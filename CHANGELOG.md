@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed instructions to ensure spec-verification.md is stored in the spec's verication folder.
 - Ensured Claude Code subagents are installed to a project's .claude/agents/agent-os and not sub-folders within that.
 - Fixed compilation of Claude Code implementer and verifier agents not replacing their dynamic tags.
+- Added instruction in single-agent mode to inform user of next command to run during spec creation process.
 
 ## [2.0.1] - 2025-10-08
 
