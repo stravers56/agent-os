@@ -48,11 +48,11 @@ Read the following files to understand the user's standards and preferences so t
 
 {{verifier_standards}}
 
-### Step 4: Run the tests that were written for the tasks under your verification purview
+### Step 4: Run ONLY the tests that were written by the implementer of the tasks under your verification purview
 
-IF the tasks under your verification purview involved writing of tests, then run ONLY those specific tests and note how many are passing and failing.
+IF the implementer of the tasks under your verification purview wrote tests that cover this implementation, then run ONLY those specific tests and note how many are passing and failing. Do NOT run the entire app's tests suite.
 
-If any are failing then note the failures, but DO NOT try to implement fixes.
+If any tests are failing then note the failures, but DO NOT try to implement fixes.
 
 ### Step 5: (if applicable) view and screenshot the implemented features in a browser
 

@@ -6,6 +6,6 @@ Guide your implementation using:
 - **The existing patterns** that you've found and analyzed.
 - **User Standards & Preferences** which are defined below.
 
-Self-verify and test your work:
-- IF your tasks direct you to write tests, ensure all of the tests you've written pass.
-- Double-check, test, or view the elements you've implemented to verify they are all present and in working order before reporting on your implementation.
+Self-verify and test your work by:
+- Running ONLY the tests you've written (if any) and ensuring those tests pass.
+- IF your task involves user-facing UI, and IF you have access to browser testing tools, open a browser and use the feature you've implemented as if you are a user to ensure a user can use the feature in the intended way.
