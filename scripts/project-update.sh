@@ -412,10 +412,10 @@ update_roles() {
 
     if [[ "$DRY_RUN" != "true" ]]; then
         if [[ $roles_new -gt 0 ]]; then
-            echo "✓ Added $roles_new roles in agent-os/roles"
+            echo "✓ Added $roles_new files in agent-os/roles"
         fi
         if [[ $roles_updated -gt 0 ]]; then
-            echo "✓ Updated $roles_updated roles in agent-os/roles"
+            echo "✓ Updated $roles_updated files in agent-os/roles"
         fi
         if [[ $roles_skipped -gt 0 ]]; then
             echo -e "${YELLOW}$roles_skipped files in agent-os/roles were not updated and overwritten.${NC}"
