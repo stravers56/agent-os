@@ -13,7 +13,7 @@ Your spec verification report is ready at `agent-os/specs/[this-spec]/verificati
 
 Review it closely to make sure it all looks good.
 
-Next step: Run the command, implement-spec.md to generate prompts for implementation.
+Next step: Run the command, `implement-spec.md` to generate prompts for implementation.
 ```
 
 ## User Standards & Preferences Compliance
