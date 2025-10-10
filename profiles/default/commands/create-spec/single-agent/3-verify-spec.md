@@ -4,6 +4,18 @@ Follow these instructions:
 
 {{workflows/specification/verify-spec}}
 
+## Display confirmation and next step
+
+Display the following message to the user:
+
+```
+Your spec verification report is ready at `agent-os/specs/[this-spec]/verification/spec-verification.md`.
+
+Review it closely to make sure it all looks good.
+
+Next step: Run the command, implement-spec.md to generate prompts for implementation.
+```
+
 ## User Standards & Preferences Compliance
 
 IMPORTANT: Ensure that your verifications are ALIGNED and DOES NOT CONFLICT with the user's preferences and standards as detailed in the following files:

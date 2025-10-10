@@ -243,7 +243,7 @@ All specifications accurately reflect requirements and properly leverage existin
 - [Number] minor issues
 - [Number] over-engineering concerns
 
-See planning/spec-verification.md for full details.
+See agent-os/specs/[this-spec]/verification/spec-verification.md for full details.
 ```
 
 ## Important Constraints
