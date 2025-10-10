@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - For Claude Code users:
   - Replaced hard-coding of 'opus' model setting on agents with 'inherit' so that it inherits whichever model your Claude Code is currently using.
   - Updated create-role script to add the "Inherit" option when creating new agents.
+- Clarified next command to run when in single-agent mode.
 
 ## [2.0.2] - 2025-10-09
 
