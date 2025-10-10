@@ -548,7 +548,7 @@ get_profile_file() {
         fi
 
         # Check if file is excluded
-        local excluded=$(get_yaml_array "$profile_config" "exclude_inheritted_files" | while read pattern; do
+        local excluded=$(get_yaml_array "$profile_config" "exclude_inherited_files" | while read pattern; do
             if match_pattern "$file_path" "$pattern"; then
                 echo "yes"
                 break
@@ -587,7 +587,7 @@ get_profile_files() {
 
         # Add exclusion patterns from this profile
         if [[ -f "$profile_config" ]]; then
-            local patterns=$(get_yaml_array "$profile_config" "exclude_inheritted_files")
+            local patterns=$(get_yaml_array "$profile_config" "exclude_inherited_files")
             if [[ -n "$patterns" ]]; then
                 excluded_patterns="$excluded_patterns"$'\n'"$patterns"
             fi
