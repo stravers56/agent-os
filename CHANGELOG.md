@@ -5,13 +5,17 @@ All notable changes to Agent OS will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.4] - 2025-10-14
+
+- Fixed multi-agent-mode not installing the roles/ files in the project agent-os folder.
+- Clarified spec-research instructions.
+
 ## [2.0.3] - 2025-10-10
 
 - Updated instructions and default standards to reduce excessive tests writing and test running during feature development to improve speed and token useage.
 - For Claude Code users:
   - Replaced hard-coding of 'opus' model setting on agents with 'inherit' so that it inherits whichever model your Claude Code is currently using.
   - Updated create-role script to add the "Inherit" option when creating new agents.
-- Clarified next command to run when in single-agent mode.
 
 ## [2.0.2] - 2025-10-09
 

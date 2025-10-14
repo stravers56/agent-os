@@ -833,9 +833,10 @@ perform_update() {
     update_standards
     echo ""
 
+    update_roles
+    echo ""
+
     if [[ "$PROJECT_SINGLE_AGENT_MODE" == "true" ]]; then
-        update_roles
-        echo ""
         update_single_agent_commands
         echo ""
     fi

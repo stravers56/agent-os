@@ -514,8 +514,8 @@ perform_installation() {
         # Collect files without output
         create_agent_os_folder
         install_standards
+        install_roles
         if [[ "$EFFECTIVE_SINGLE_AGENT_MODE" == "true" ]]; then
-            install_roles
             install_single_agent_commands
         fi
         if [[ "$EFFECTIVE_MULTI_AGENT_MODE" == "true" ]] && [[ "$EFFECTIVE_MULTI_AGENT_TOOL" == "claude-code" ]]; then
@@ -537,9 +537,10 @@ perform_installation() {
         install_standards
         echo ""
 
+        install_roles
+        echo ""
+
         if [[ "$EFFECTIVE_SINGLE_AGENT_MODE" == "true" ]]; then
-            install_roles
-            echo ""
             install_single_agent_commands
             echo ""
         fi

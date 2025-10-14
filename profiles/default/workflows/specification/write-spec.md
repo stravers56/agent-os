@@ -52,7 +52,9 @@ Document your findings for use in the specification.
 
 Write the main specification to `agent-os/specs/[current-spec]/spec.md`.
 
-Do not write actual code in the spec.md document. Just describe the requirements clearly and concisely.
+DO NOT write actual code in the spec.md document. Just describe the requirements clearly and concisely.
+
+Keep it short and include only essential information for each section.
 
 Follow this structure exactly when creating the content of `spec.md`:
 
