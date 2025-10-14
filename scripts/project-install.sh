@@ -354,7 +354,7 @@ install_claude_code_files() {
         local template_file=$(get_profile_file "$EFFECTIVE_PROFILE" "agents/templates/implementer.md" "$BASE_DIR")
         if [[ -f "$template_file" ]]; then
             # Get list of implementer IDs
-            local implementer_ids=$(awk '/^  - id:/ {print $3}' "$implementers_file")
+            local implementer_ids=$(awk '/^[ \t]*- id:/ {print $3}' "$implementers_file")
 
             for id in $implementer_ids; do
                 print_verbose "Generating implementer agent: $id"
@@ -408,7 +408,7 @@ install_claude_code_files() {
         local template_file=$(get_profile_file "$EFFECTIVE_PROFILE" "agents/templates/verifier.md" "$BASE_DIR")
         if [[ -f "$template_file" ]]; then
             # Get list of verifier IDs
-            local verifier_ids=$(awk '/^  - id:/ {print $3}' "$verifiers_file")
+            local verifier_ids=$(awk '/^[ \t]*- id:/ {print $3}' "$verifiers_file")
 
             for id in $verifier_ids; do
                 print_verbose "Generating area verifier agent: $id"

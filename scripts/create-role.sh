@@ -500,7 +500,7 @@ select_verifiers() {
     fi
 
     # Extract verifier IDs
-    local verifier_ids=($(awk '/^  - id:/ {print $3}' "$verifiers_file"))
+    local verifier_ids=($(awk '/^[ \t]*- id:/ {print $3}' "$verifiers_file"))
 
     if [[ ${#verifier_ids[@]} -eq 0 ]]; then
         print_verbose "No verifiers defined, skipping verifier selection"
