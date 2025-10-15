@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed multi-agent-mode not installing the roles/ files in the project agent-os folder.
 - Clarified spec-research instructions.
+- In single-agent mode, added verification prompt generation to the implementation phase.
 
 ## [2.0.3] - 2025-10-10
 
