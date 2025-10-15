@@ -329,7 +329,7 @@ prompt_overwrite_choice() {
     print_status "What would you like to do?"
     echo ""
     echo "1) Overwrite everything"
-    echo "2) Overwrite only the default profile, including your standards"
+    echo "2) Overwrite only the default profile, including this profile's standards"
     echo "3) Overwrite only the scripts"
     echo "4) Overwrite only the base config.yml"
     echo "5) Cancel installation"
