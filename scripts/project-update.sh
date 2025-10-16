@@ -612,7 +612,7 @@ update_claude_code_files() {
     if [[ -f "$implementers_file" ]]; then
         local template_file=$(get_profile_file "$PROJECT_PROFILE" "agents/templates/implementer.md" "$BASE_DIR")
         if [[ -f "$template_file" ]]; then
-            local implementer_ids=$(awk '/^  - id:/ {print $3}' "$implementers_file")
+            local implementer_ids=$(awk '/^[ \t]*- id:/ {print $3}' "$implementers_file")
 
             for id in $implementer_ids; do
                 print_verbose "Updating implementer agent: $id"
@@ -676,7 +676,7 @@ update_claude_code_files() {
     if [[ -f "$verifiers_file" ]]; then
         local template_file=$(get_profile_file "$PROJECT_PROFILE" "agents/templates/verifier.md" "$BASE_DIR")
         if [[ -f "$template_file" ]]; then
-            local verifier_ids=$(awk '/^  - id:/ {print $3}' "$verifiers_file")
+            local verifier_ids=$(awk '/^[ \t]*- id:/ {print $3}' "$verifiers_file")
 
             for id in $verifier_ids; do
                 print_verbose "Updating area verifier agent: $id"
