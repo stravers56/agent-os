@@ -5,6 +5,11 @@ All notable changes to Agent OS will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.5] - 2025-10-16
+
+- Updated base installation update options to include a "Full update" option, which is the easiest way to pull and update the latest Agent OS stuff (default profile, scripts) without losing your base installation's custom profiles.
+- The "Full update" option also dynamically updates your base install config.yml version number without changing your configurations.
+
 ## [2.0.4] - 2025-10-14
 
 - Fixed multi-agent-mode not installing the roles/ files in the project agent-os folder.
