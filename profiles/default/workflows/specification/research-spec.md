@@ -44,7 +44,7 @@ This context will help you:
 
 ### Step 3: Generate First Round of Questions WITH Visual Request AND Reusability Check
 
-Based on the initial idea, generate 6-9 targeted, NUMBERED questions that explore requirements while suggesting reasonable defaults.
+Based on the initial idea, generate 4-8 targeted, NUMBERED questions that explore requirements while suggesting reasonable defaults.
 
 **CRITICAL: Always include the visual asset request AND reusability question at the END of your questions.**
 
@@ -149,7 +149,9 @@ Please provide these additional details.
 
 ### Step 6: Save Complete Requirements
 
-After all questions are answered, record ALL gathered information to `[spec-path]/planning/requirements.md` using the following structure, exactly:
+After all questions are answered, record ALL gathered information to ONE FILE at this location with this name: `[spec-path]/planning/requirements.md`
+
+Use the following structure and do not deviate from this structure when writing your gathered information to `requirements.md`.  Include ONLY the items specified in the following structure:
 
 ```markdown
 # Spec Requirements: [Spec Name]
@@ -249,8 +251,8 @@ Ready for specification creation.
 ## Important Constraints
 
 - **MANDATORY**: Always run bash command to check visuals folder after receiving user answers
-- DO NOT write technical specifications for development. Just record your findings from information gathering to `[spec-path]/planning/requirements.md`.
-- Visual check is based on actual files found via bash, NOT user statements
+- DO NOT write technical specifications for development. Just record your findings from information gathering to this single file: `[spec-path]/planning/requirements.md`.
+- Visual check is based on actual file(s) found via bash, NOT user statements
 - Check filenames for low-fidelity indicators and clarify design intent if found
 - Ask about existing similar features to promote code reuse
 - Keep follow-ups minimal (1-3 questions max)
