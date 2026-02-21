@@ -1,0 +1,23 @@
+database:
+  conventions:
+    description: SQLite vs MySQL selection criteria, schema and query conventions
+
+documents:
+  conventions:
+    description: LaTeX, Word, PowerPoint, Excel conventions and format selection guide
+
+javascript:
+  conventions:
+    description: JavaScript/Node.js project setup, package management, usage criteria
+
+obsidian:
+  conventions:
+    description: Calliope vault structure, frontmatter fields, CLI access, search hierarchy
+
+python:
+  conventions:
+    description: uv/venv environment, multithreading defaults, project structure
+
+rust:
+  conventions:
+    description: Rust 1.92.0 Edition 2024 setup, cargo usage, when to choose Rust
