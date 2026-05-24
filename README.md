@@ -15,6 +15,36 @@ Works alongside Claude Code, Cursor, Antigravity, and other AI tools. Any langua
 
 ---
 
+### Installing & updating a project
+
+From inside a project directory:
+
+```bash
+# First-time install — copies standards, workflows, and commands from the active profile
+/path/to/agent-os/scripts/project-install.sh
+
+# Update an existing install to match the current profile
+/path/to/agent-os/scripts/project-update.sh --dry-run   # preview every change first
+/path/to/agent-os/scripts/project-update.sh             # apply
+```
+
+Both scripts walk the profile inheritance chain (e.g. `personal` → `default`) and install:
+
+- `standards/**` → `agent-os/standards/` (with a regenerated `index.yml`)
+- `workflows/**` → `agent-os/workflows/`
+- repo-root `commands/agent-os/*` plus any `profiles/<profile>/commands/**` → `.claude/commands/agent-os/`
+
+**`project-install.sh`** only adds/overwrites (it prompts before replacing existing
+standards). **`project-update.sh`** additionally **prunes** files that no longer exist in the
+profile and **backs up** anything it overwrites or removes to `agent-os/.backups/<timestamp>/`,
+so it's the safe way to pull breaking changes into an older install. Always run it with
+`--dry-run` first. Add `agent-os/.backups/` to the project's `.gitignore`.
+
+Useful flags: `--profile <name>`, `--commands-only` (install), `--no-prune` / `--no-backup`
+(update).
+
+---
+
 ### Documentation & Installation
 
 Docs, installation, usage, & best practices 👉 [It's all here](https://buildermethods.com/agent-os)

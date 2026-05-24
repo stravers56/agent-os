@@ -5,6 +5,9 @@ https://buildermethods.com/agent-os
 
 ## Unreleased
 
+- Added `project-update.sh`: updates an existing install to match the current profile, **pruning** files removed from the profile and **backing up** anything overwritten or removed to `agent-os/.backups/<timestamp>/`. Supports `--dry-run`, `--no-prune`, `--no-backup`, `--profile`. Extracted the shared index regeneration into `regenerate_standards_index()` in `common-functions.sh`.
+- Extended `project-install.sh` to install profile **workflows** (`profiles/<profile>/workflows/**` → `agent-os/workflows/`) and to overlay profile **command** overrides (`profiles/<profile>/commands/**` → `.claude/commands/agent-os/`, README excluded), both walking the inheritance chain. Added `--commands-only` skip for workflows.
+- Added `personal` profile standards: `claude-tooling/` (skills, hooks, MCP servers, subagents, Agent SDK / Claude API apps), `shell/` (zsh), and cross-cutting `git-workflow`, `security`, `testing-and-verification`, `project-structure`. Populated the `workflows/` planning/specification/implementation guidance and refreshed `global/tech-stack.md` and the standards `index.yml`.
 - Fixed silent install failures caused by `((var++))` under `set -e` in `project-install.sh`, `sync-to-profile.sh`, and `common-functions.sh` (#328).
 - Replaced GNU-only `tac` in `project-install.sh` with a POSIX `awk` invocation so installs work on macOS without `coreutils` (#327).
 

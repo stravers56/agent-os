@@ -200,6 +200,105 @@ copy_file() {
     print_verbose "Copied: $source -> $dest"
 }
 
+# Regenerate the standards index.yml for a project standards directory.
+# Preserves existing one-line descriptions; marks new entries for /index-standards.
+# Usage: regenerate_standards_index <standards_dir>
+regenerate_standards_index() {
+    local standards_dir="$1"
+    local index_file="$standards_dir/index.yml"
+    local temp_file="$standards_dir/.index_temp.yml"
+    local old_index=""
+
+    # Save existing index content for description lookup
+    if [[ -f "$index_file" ]]; then
+        old_index=$(cat "$index_file")
+    fi
+
+    local entry_count=0
+    local new_count=0
+
+    # Start fresh
+    echo "# Agent OS Standards Index" > "$temp_file"
+    echo "" >> "$temp_file"
+
+    # Helper to get existing description from old index
+    # Looks for pattern: folder:\n  filename:\n    description: ...
+    get_existing_description() {
+        local folder="$1"
+        local filename="$2"
+
+        if [[ -z "$old_index" ]]; then
+            return 1
+        fi
+
+        local desc=$(echo "$old_index" | awk -v folder="$folder" -v file="$filename" '
+            $0 ~ "^"folder":$" { in_folder=1; next }
+            /^[a-zA-Z0-9_-]+:$/ { in_folder=0 }
+            in_folder && $0 ~ "^  "file":$" { in_file=1; next }
+            in_folder && /^  [a-zA-Z0-9_-]+:$/ { in_file=0 }
+            in_folder && in_file && /description:/ {
+                sub(/^[[:space:]]*description:[[:space:]]*/, "")
+                print
+                exit
+            }
+        ')
+
+        if [[ -n "$desc" && "$desc" != "Needs description - run /index-standards" ]]; then
+            echo "$desc"
+            return 0
+        fi
+        return 1
+    }
+
+    # First, handle root-level .md files (not in subfolders)
+    local root_files=$(find "$standards_dir" -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort)
+    if [[ -n "$root_files" ]]; then
+        echo "root:" >> "$temp_file"
+        while IFS= read -r file; do
+            local filename=$(basename "$file" .md)
+            local desc=$(get_existing_description "root" "$filename")
+            if [[ -z "$desc" ]]; then
+                desc="Needs description - run /index-standards"
+                (( new_count++ )) || true
+            fi
+            echo "  $filename:" >> "$temp_file"
+            echo "    description: $desc" >> "$temp_file"
+            (( entry_count++ )) || true
+        done <<< "$root_files"
+        echo "" >> "$temp_file"
+    fi
+
+    # Then handle files in subfolders
+    local folders=$(find "$standards_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort)
+    for folder in $folders; do
+        local folder_name=$(basename "$folder")
+        local md_files=$(find "$folder" -name "*.md" -type f 2>/dev/null | sort)
+
+        if [[ -n "$md_files" ]]; then
+            echo "$folder_name:" >> "$temp_file"
+            while IFS= read -r file; do
+                local filename=$(basename "$file" .md)
+                local desc=$(get_existing_description "$folder_name" "$filename")
+                if [[ -z "$desc" ]]; then
+                    desc="Needs description - run /index-standards"
+                    (( new_count++ )) || true
+                fi
+                echo "  $filename:" >> "$temp_file"
+                echo "    description: $desc" >> "$temp_file"
+                (( entry_count++ )) || true
+            done <<< "$md_files"
+            echo "" >> "$temp_file"
+        fi
+    done
+
+    # Move temp file to final location
+    mv "$temp_file" "$index_file"
+
+    # Report (via globals so callers can phrase their own message if desired)
+    INDEX_ENTRY_COUNT="$entry_count"
+    INDEX_NEW_COUNT="$new_count"
+}
+
 # Copy directory contents recursively (excluding .backups/)
 copy_standards() {
     local source_dir=$1

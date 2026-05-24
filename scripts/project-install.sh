@@ -35,7 +35,7 @@ Install Agent OS into the current project directory.
 
 Options:
     --profile <name>     Use specified profile (default: from config.yml)
-    --commands-only      Only update commands, preserve existing standards
+    --commands-only      Only update commands, preserve existing standards and workflows
     --verbose            Show detailed output
     -h, --help           Show this help message
 
@@ -279,106 +279,88 @@ create_index() {
     echo ""
     print_status "Updating standards index..."
 
-    local standards_dir="$PROJECT_DIR/agent-os/standards"
-    local index_file="$standards_dir/index.yml"
-    local temp_file="$standards_dir/.index_temp.yml"
-    local old_index=""
+    regenerate_standards_index "$PROJECT_DIR/agent-os/standards"
 
-    # Save existing index content for description lookup
-    if [[ -f "$index_file" ]]; then
-        old_index=$(cat "$index_file")
-    fi
-
-    local entry_count=0
-    local new_count=0
-
-    # Start fresh
-    echo "# Agent OS Standards Index" > "$temp_file"
-    echo "" >> "$temp_file"
-
-    # Helper to get existing description from old index
-    # Looks for pattern: folder:\n  filename:\n    description: ...
-    get_existing_description() {
-        local folder="$1"
-        local filename="$2"
-
-        if [[ -z "$old_index" ]]; then
-            return 1
-        fi
-
-        # Use awk to find the description for this folder/file combo
-        local desc=$(echo "$old_index" | awk -v folder="$folder" -v file="$filename" '
-            $0 ~ "^"folder":$" { in_folder=1; next }
-            /^[a-zA-Z0-9_-]+:$/ { in_folder=0 }
-            in_folder && $0 ~ "^  "file":$" { in_file=1; next }
-            in_folder && /^  [a-zA-Z0-9_-]+:$/ { in_file=0 }
-            in_folder && in_file && /description:/ {
-                sub(/^[[:space:]]*description:[[:space:]]*/, "")
-                print
-                exit
-            }
-        ')
-
-        if [[ -n "$desc" && "$desc" != "Needs description - run /index-standards" ]]; then
-            echo "$desc"
-            return 0
-        fi
-        return 1
-    }
-
-    # First, handle root-level .md files (not in subfolders)
-    local root_files=$(find "$standards_dir" -maxdepth 1 -name "*.md" -type f 2>/dev/null | sort)
-    if [[ -n "$root_files" ]]; then
-        echo "root:" >> "$temp_file"
-        while IFS= read -r file; do
-            local filename=$(basename "$file" .md)
-            local desc=$(get_existing_description "root" "$filename")
-            if [[ -z "$desc" ]]; then
-                desc="Needs description - run /index-standards"
-                (( new_count++ )) || true
-            fi
-            echo "  $filename:" >> "$temp_file"
-            echo "    description: $desc" >> "$temp_file"
-            (( entry_count++ )) || true
-        done <<< "$root_files"
-        echo "" >> "$temp_file"
-    fi
-
-    # Then handle files in subfolders
-    local folders=$(find "$standards_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort)
-    for folder in $folders; do
-        local folder_name=$(basename "$folder")
-        local md_files=$(find "$folder" -name "*.md" -type f 2>/dev/null | sort)
-
-        if [[ -n "$md_files" ]]; then
-            echo "$folder_name:" >> "$temp_file"
-            while IFS= read -r file; do
-                local filename=$(basename "$file" .md)
-                local desc=$(get_existing_description "$folder_name" "$filename")
-                if [[ -z "$desc" ]]; then
-                    desc="Needs description - run /index-standards"
-                    (( new_count++ )) || true
-                fi
-                echo "  $filename:" >> "$temp_file"
-                echo "    description: $desc" >> "$temp_file"
-                (( entry_count++ )) || true
-            done <<< "$md_files"
-            echo "" >> "$temp_file"
-        fi
-    done
-
-    # Move temp file to final location
-    mv "$temp_file" "$index_file"
-
-    if [[ "$entry_count" -gt 0 ]]; then
-        if [[ "$new_count" -gt 0 ]]; then
-            print_success "Updated index.yml ($entry_count entries, $new_count new)"
+    if [[ "$INDEX_ENTRY_COUNT" -gt 0 ]]; then
+        if [[ "$INDEX_NEW_COUNT" -gt 0 ]]; then
+            print_success "Updated index.yml ($INDEX_ENTRY_COUNT entries, $INDEX_NEW_COUNT new)"
         else
-            print_success "Updated index.yml ($entry_count entries)"
+            print_success "Updated index.yml ($INDEX_ENTRY_COUNT entries)"
         fi
     else
         print_success "Created index.yml (no standards to index)"
     fi
+}
+
+install_workflows() {
+    if [[ "$COMMANDS_ONLY" == "true" ]]; then
+        print_status "Skipping workflows (--commands-only)"
+        return
+    fi
+
+    echo ""
+    print_status "Installing workflows..."
+
+    local project_workflows="$PROJECT_DIR/agent-os/workflows"
+    local profiles_used=0
+
+    # Temp file to track file sources (format: relative_path|profile_name)
+    local sources_file=$(mktemp)
+
+    # Process each profile in the inheritance chain (base first, so later ones override)
+    while IFS= read -r profile_name; do
+        [[ -z "$profile_name" ]] && continue
+
+        local profile_workflows="$BASE_DIR/profiles/$profile_name/workflows"
+
+        if [[ ! -d "$profile_workflows" ]]; then
+            continue
+        fi
+
+        local profile_file_count=0
+
+        # Find all .md files in this profile's workflows, excluding .backups
+        while IFS= read -r -d '' file; do
+            local relative_path="${file#$profile_workflows/}"
+            local dest_file="$project_workflows/$relative_path"
+
+            ensure_dir "$(dirname "$dest_file")"
+            cp "$file" "$dest_file"
+
+            # Track the source - remove old entry if exists, add new one
+            grep -v "^${relative_path}|" "$sources_file" > "${sources_file}.tmp" 2>/dev/null || true
+            mv "${sources_file}.tmp" "$sources_file"
+            echo "${relative_path}|${profile_name}" >> "$sources_file"
+            (( profile_file_count++ )) || true
+        done < <(find "$profile_workflows" -name "*.md" -type f ! -path "*/.backups/*" -print0 2>/dev/null)
+
+        if [[ "$profile_file_count" -gt 0 ]]; then
+            (( profiles_used++ )) || true
+        fi
+    done <<< "$INHERITANCE_CHAIN"
+
+    local chain_count=$(echo "$INHERITANCE_CHAIN" | grep -c .)
+    local total_count=$(wc -l < "$sources_file" | tr -d ' ')
+
+    if [[ "$total_count" -gt 0 ]]; then
+        sort "$sources_file" | while IFS='|' read -r filepath profile; do
+            if [[ "$chain_count" -gt 1 ]]; then
+                echo "  $filepath (from $profile)"
+            else
+                echo "  $filepath"
+            fi
+        done
+
+        if [[ "$profiles_used" -gt 1 ]]; then
+            print_success "Installed $total_count workflow files (from $profiles_used profiles)"
+        else
+            print_success "Installed $total_count workflow files"
+        fi
+    else
+        print_success "No workflows to install (profile is empty)"
+    fi
+
+    rm -f "$sources_file"
 }
 
 install_commands() {
@@ -388,23 +370,48 @@ install_commands() {
     local commands_source="$BASE_DIR/commands/agent-os"
     local commands_dest="$PROJECT_DIR/.claude/commands/agent-os"
 
-    if [[ ! -d "$commands_source" ]]; then
-        print_warning "No commands found in base installation"
-        return
-    fi
-
     ensure_dir "$commands_dest"
 
-    local count=0
-    for file in "$commands_source"/*.md; do
-        if [[ -f "$file" ]]; then
-            cp "$file" "$commands_dest/"
-            (( count++ )) || true
-        fi
-    done
+    # Base commands (shared across all profiles)
+    local base_count=0
+    if [[ -d "$commands_source" ]]; then
+        for file in "$commands_source"/*.md; do
+            if [[ -f "$file" ]]; then
+                cp "$file" "$commands_dest/"
+                (( base_count++ )) || true
+            fi
+        done
+    else
+        print_warning "No base commands found in base installation"
+    fi
 
-    if [[ "$count" -gt 0 ]]; then
-        print_success "Installed $count commands to .claude/commands/agent-os/"
+    # Profile command overrides from the inheritance chain (base first, so later
+    # profiles override earlier ones by relative path). README.md is documentation,
+    # not a command, so it is skipped.
+    local profile_count=0
+    while IFS= read -r profile_name; do
+        [[ -z "$profile_name" ]] && continue
+
+        local profile_commands="$BASE_DIR/profiles/$profile_name/commands"
+        [[ ! -d "$profile_commands" ]] && continue
+
+        while IFS= read -r -d '' file; do
+            local relative_path="${file#$profile_commands/}"
+            [[ "$(basename "$relative_path")" == "README.md" ]] && continue
+
+            local dest_file="$commands_dest/$relative_path"
+            ensure_dir "$(dirname "$dest_file")"
+            cp "$file" "$dest_file"
+            (( profile_count++ )) || true
+        done < <(find "$profile_commands" -name "*.md" -type f ! -path "*/.backups/*" -print0 2>/dev/null)
+    done <<< "$INHERITANCE_CHAIN"
+
+    if [[ $(( base_count + profile_count )) -gt 0 ]]; then
+        if [[ "$profile_count" -gt 0 ]]; then
+            print_success "Installed $base_count base + $profile_count profile commands to .claude/commands/agent-os/"
+        else
+            print_success "Installed $base_count commands to .claude/commands/agent-os/"
+        fi
     else
         print_warning "No command files found"
     fi
@@ -462,6 +469,7 @@ main() {
     create_project_structure
     install_standards
     create_index
+    install_workflows
     install_commands
 
     echo ""

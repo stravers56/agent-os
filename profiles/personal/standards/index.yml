@@ -1,6 +1,22 @@
+# Agent OS Standards Index
+
+root:
+  git-workflow:
+    description: Commit discipline, branching, GitHub, multi-repo sync, what never to commit
+  project-structure:
+    description: Local layout, CLAUDE.md/README, project memory, scaffolding, working discipline
+  security:
+    description: Secrets storage, untrusted input handling, TLS, dependency hygiene, least privilege
+  testing-and-verification:
+    description: Verify-before-done, TDD, per-language test mechanics, determinism, pre-commit gate
+
+claude-tooling:
+  conventions:
+    description: Building skills, hooks, MCP servers, subagents, Agent SDK apps, Claude API apps
+
 database:
   conventions:
-    description: SQLite vs MySQL selection criteria, schema and query conventions
+    description: PostgreSQL-default vs SQLite selection, cio-pg-db, schema, indexing, migrations, security
 
 documents:
   conventions:
@@ -8,7 +24,7 @@ documents:
 
 javascript:
   conventions:
-    description: JavaScript/Node.js project setup, package management, usage criteria
+    description: TypeScript/Obsidian-plugin setup, esbuild, child-process safety, security, testing
 
 obsidian:
   conventions:
@@ -20,4 +36,8 @@ python:
 
 rust:
   conventions:
-    description: Rust 1.92.0 Edition 2024 setup, cargo usage, when to choose Rust
+    description: Rust 1.92.0 Edition 2024 setup, dependency stack, error handling, testing, tooling
+
+shell:
+  conventions:
+    description: zsh scripts in /Users/local/scripts/ — safety, temp files, paths, secrets, wrappers
